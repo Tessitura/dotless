@@ -14,7 +14,7 @@ namespace dotless.Core.configuration
     {
         public DotlessConfiguration Process(XmlNode section)
         {
-            var dotlessConfiguration = DotlessConfiguration.GetDefaultWeb();
+            var dotlessConfiguration = DotlessConfiguration.GetDefault();
 
             dotlessConfiguration.MinifyOutput = GetBoolValue(section, "minifyCss") ?? dotlessConfiguration.MinifyOutput;
             dotlessConfiguration.Debug = GetBoolValue(section, "debug") ?? dotlessConfiguration.Debug;

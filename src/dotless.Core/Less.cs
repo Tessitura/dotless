@@ -1,22 +1,17 @@
 ﻿namespace dotless.Core
 {
     using configuration;
-    using System;
 
     public static class Less
     {
-        public static string Parse(string less)
+        public static string Parse(ILessEngine engine, string less)
         {
-            return Parse(less, DotlessConfiguration.GetDefault());
+            return Parse(engine, less, DotlessConfiguration.GetDefault());
         }
 
-        public static string Parse(string less, DotlessConfiguration config)
+        public static string Parse(ILessEngine engine, string less, DotlessConfiguration config)
         {
-            if (config.Web)
-            {
-                throw new Exception("Please use dotless.Core.LessWeb.Parse for web applications. This makes sure all web features are available.");
-            }
-            return new EngineFactory(config).GetEngine().TransformToCss(less, null);
+            return engine.TransformToCss(less, null);
         }
     }
 }

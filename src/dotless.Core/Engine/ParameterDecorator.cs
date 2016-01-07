@@ -7,6 +7,11 @@ namespace dotless.Core
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
+
+    using dotless.Core.Importers;
+    using dotless.Core.Parser;
+    using dotless.Core.Stylizers;
+
     using Parameters;
 
     public class ParameterDecorator : ILessEngine
@@ -26,7 +31,7 @@ namespace dotless.Core
             var parameters = parameterSource.GetParameters()
                 .Where(ValueIsNotNullOrEmpty);
 
-            var parser = new Parser.Parser();
+            var parser = new Parser.Parser(new PlainStylizer(), new Importer(), new ParserConfig(null) { Debug = false, Optimization = 1 });
             sb.Append(source);
             foreach (var parameter in parameters)
             {

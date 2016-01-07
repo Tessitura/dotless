@@ -35,14 +35,6 @@ namespace dotless.Core.configuration
             return new DotlessConfiguration();;
         }
 
-        public static DotlessConfiguration GetDefaultWeb()
-        {
-            return new DotlessConfiguration
-            {
-                Web = true
-            };
-        }
-
         public DotlessConfiguration()
         {
             LessSource = typeof (FileReader);
@@ -50,7 +42,6 @@ namespace dotless.Core.configuration
             Debug = false;
             CacheEnabled = true;
             HttpExpiryInMinutes = DefaultHttpExpiryInMinutes;
-            Web = false;
             SessionMode = DotlessSessionStateMode.Disabled;
             SessionQueryParamName = DEFAULT_SESSION_QUERY_PARAM_NAME;
             Logger = null;
@@ -72,7 +63,6 @@ namespace dotless.Core.configuration
             MinifyOutput = config.MinifyOutput;
             Debug = config.Debug;
             CacheEnabled = config.CacheEnabled;
-            Web = config.Web;
             SessionMode = config.SessionMode;
             SessionQueryParamName = config.SessionQueryParamName;
             Logger = null;
@@ -179,11 +169,6 @@ namespace dotless.Core.configuration
         ///  IFileReader type to use to get imported files
         /// </summary>
         public Type LessSource { get; set; }
-
-        /// <summary>
-        ///  Whether this is used in a web context or not
-        /// </summary>
-        public bool Web { get; set; }
 
         /// <summary>
         ///  Specifies the mode the HttpContext.Session is loaded.

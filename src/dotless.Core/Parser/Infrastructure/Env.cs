@@ -10,11 +10,15 @@ namespace dotless.Core.Parser.Infrastructure
     using System.Linq;
     using System.Reflection;
     using System.Text.RegularExpressions;
+
+    using dotless.Core.Importers;
+
     using Functions;
     using Nodes;
     using Plugins;
     using Tree;
     using dotless.Core.Loggers;
+    using dotless.Core.Stylizers;
 
     public class Env
     {
@@ -36,7 +40,7 @@ namespace dotless.Core.Parser.Infrastructure
         public bool IsFirstSpecialCommentOutput { get; set; }
         public Parser Parser { get; set; }
 
-        public Env() : this(new Parser())
+        public Env() : this(new Parser(new PlainStylizer(), new Importer(), new ParserConfig(null) { Debug = false, Optimization = 1 }))
         {
         }
 

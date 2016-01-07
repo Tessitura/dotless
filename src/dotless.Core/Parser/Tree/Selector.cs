@@ -6,6 +6,10 @@ namespace dotless.Core.Parser.Tree
     using Infrastructure.Nodes;
     using System.Collections.Generic;
 	using System.Linq;
+
+    using dotless.Core.Importers;
+    using dotless.Core.Stylizers;
+
     using Plugins;
 
     public class Selector : Node
@@ -38,7 +42,7 @@ namespace dotless.Core.Parser.Tree
         private Parser Parser {
             get {
                 if (parser == null) {
-                    parser = new Parser();
+                    parser = new Parser(new PlainStylizer(), new Importer(), new ParserConfig(null) { Debug = false, Optimization = 1 });
                 }
 
                 return parser;

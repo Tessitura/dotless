@@ -4,7 +4,7 @@ namespace dotless.Core.Loggers
 
     public class ConsoleLogger : Logger
     {
-        public ConsoleLogger(LogLevel level) : base(level) {}
+        public ConsoleLogger(LoggerConfig config) : base(config.LogLevel) {}
 
         protected override void Log(string message)
         {

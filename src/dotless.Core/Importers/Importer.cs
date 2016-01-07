@@ -11,6 +11,8 @@ namespace dotless.Core.Importers
     using System.Text.RegularExpressions;
     using System.Reflection;
 
+    using dotless.Core.configuration;
+
     public class Importer : IImporter
     {
         private static readonly Regex _embeddedResourceRegex = new Regex(@"^dll://(?<Assembly>.+?)#(?<Resource>.+)$");
@@ -57,21 +59,21 @@ namespace dotless.Core.Importers
         public bool InlineCssFiles { get; set; }
 
 
-        public Importer() : this(new FileReader())
+        internal Importer() : this(new FileReader())
         {
         }
 
-        public Importer(IFileReader fileReader) : this(fileReader, false, "", false, false)
+        internal Importer(IFileReader fileReader) : this(fileReader, new ImporterConfig() { DisableUrlRewriting = false, ImportAllFilesAsLess = false, RootPath = "", InlineCssFiles = false})
         {
         }
 
-        public Importer(IFileReader fileReader, bool disableUrlReWriting, string rootPath, bool inlineCssFiles, bool importAllFilesAsLess)
+        public Importer(IFileReader fileReader, ImporterConfig config)
         {
             FileReader = fileReader;
-            IsUrlRewritingDisabled = disableUrlReWriting;
-            RootPath = rootPath;
-            InlineCssFiles = inlineCssFiles;
-            ImportAllFilesAsLess = importAllFilesAsLess;
+            IsUrlRewritingDisabled = config.DisableUrlRewriting;
+            RootPath = config.RootPath;
+            InlineCssFiles = config.InlineCssFiles;
+            ImportAllFilesAsLess = config.ImportAllFilesAsLess;
             Imports = new List<string>();
             CurrentDirectory = "";
         }

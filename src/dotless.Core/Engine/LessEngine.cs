@@ -7,6 +7,9 @@ namespace dotless.Core
 {
     using System.Collections.Generic;
     using System.Linq;
+
+    using dotless.Core.Engine;
+
     using Exceptions;
     using Loggers;
     using Parser.Infrastructure;
@@ -31,42 +34,17 @@ namespace dotless.Core
             set { Parser.CurrentDirectory = value; }
         }
 
-        public LessEngine(Parser.Parser parser, ILogger logger, bool compress, bool debug, bool disableVariableRedefines, bool disableColorCompression, bool keepFirstSpecialComment, bool strictMath, IEnumerable<IPluginConfigurator> plugins)
+        public LessEngine(Parser.Parser parser, ILogger logger, LessEngineConfig config)
         {
             Parser = parser;
             Logger = logger;
-            Compress = compress;
-            Debug = debug;
-            DisableVariableRedefines = disableVariableRedefines;
-            Plugins = plugins;
-            KeepFirstSpecialComment = keepFirstSpecialComment;
-            DisableColorCompression = disableColorCompression;
-            StrictMath = strictMath;
-        }
-
-        public LessEngine(Parser.Parser parser, ILogger logger, bool compress, bool debug, bool disableVariableRedefines, bool disableColorCompression, bool keepFirstSpecialComment, IEnumerable<IPluginConfigurator> plugins)
-            :this(parser, logger, compress, debug, disableVariableRedefines, disableColorCompression, keepFirstSpecialComment, false, plugins)
-        {
-        }
-
-        public LessEngine(Parser.Parser parser, ILogger logger, bool compress, bool debug)
-            : this(parser, logger, compress, debug, false, false, false, null)
-        {
-        }
-
-        public LessEngine(Parser.Parser parser, ILogger logger, bool compress, bool debug, bool disableVariableRedefines)
-            : this(parser, logger, compress, debug, disableVariableRedefines, false, false, null)
-        {
-        }
-
-        public LessEngine(Parser.Parser parser)
-            : this(parser, new ConsoleLogger(LogLevel.Error), false, false, false, false, false, null)
-        {
-        }
-
-        public LessEngine()
-            : this(new Parser.Parser())
-        {
+            Compress = config.Compress;
+            Debug = config.Debug;
+            DisableVariableRedefines = config.DisableVariableRedefines;
+            Plugins = config.Plugins;
+            KeepFirstSpecialComment = config.KeepFirstSpecialComment;
+            DisableColorCompression = config.DisableColorCompression;
+            StrictMath = config.StrictMath;
         }
 
         public string TransformToCss(string source, string fileName)

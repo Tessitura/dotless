@@ -45,6 +45,8 @@ namespace dotless.Core.Parser
     //
     public class Parser
     {
+        private ParserConfig _config;
+
         public Tokenizer Tokenizer { get; set; }
         public IStylizer Stylizer { get; set; }
         public string FileName { get; set; }
@@ -70,7 +72,7 @@ namespace dotless.Core.Parser
             set
             {
                 _importer = value;
-                _importer.Parser = () => new Parser(Tokenizer.Optimization, Stylizer, _importer)
+                _importer.Parser = () => new Parser(Stylizer, _importer, _config)
                                              {
                                                  NodeProvider = NodeProvider,
                                                  Debug = Debug,
@@ -82,50 +84,13 @@ namespace dotless.Core.Parser
 
         public bool StrictMath { get; set; }
 
-        private const int defaultOptimization = 1;
-        private const bool defaultDebug = false;
-
-        public Parser()
-            : this(defaultOptimization, defaultDebug)
-        {
-        }
-
-        public Parser(bool debug)
-            : this(defaultOptimization, debug)
-        {
-        }
-
-        public Parser(int optimization)
-            : this(optimization, new PlainStylizer(), new Importer(), defaultDebug)
-        {
-        }
-
-        public Parser(int optimization, bool debug)
-            : this(optimization, new PlainStylizer(), new Importer(), debug)
-        {
-        }
-
-        public Parser(IStylizer stylizer, IImporter importer)
-            : this(defaultOptimization, stylizer, importer, defaultDebug)
-        {
-        }
-
-        public Parser(IStylizer stylizer, IImporter importer, bool debug)
-            : this(defaultOptimization, stylizer, importer, debug)
-        {
-        }
-
-        public Parser(int optimization, IStylizer stylizer, IImporter importer)
-            : this(optimization, stylizer, importer, defaultDebug)
-        {
-        }
-
-        public Parser(int optimization, IStylizer stylizer, IImporter importer, bool debug)
+        public Parser(IStylizer stylizer, IImporter importer, ParserConfig config)
         {
             Stylizer = stylizer;
             Importer = importer;
-            Debug = debug;
-            Tokenizer = new Tokenizer(optimization);
+            _config = config;
+            Debug = config.Debug;
+            Tokenizer = new Tokenizer(config.Optimization);
         }
 
         public Ruleset Parse(string input, string fileName)

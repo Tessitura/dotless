@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>dotless.Core</RootNamespace>
     <AssemblyName>dotless.Core</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\dotless-open-source.snk</AssemblyOriginatorKeyFile>
@@ -33,7 +33,8 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
   </PropertyGroup>
@@ -46,6 +47,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -55,6 +57,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -75,8 +78,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="configuration\IConfigurationManager.cs" />
+    <Compile Include="Engine\LessEngineConfig.cs" />
+    <Compile Include="ICoreServiceLocator.cs" />
+    <Compile Include="ICoreServiceRegistrar.cs" />
     <Compile Include="Importers\IImporter.cs" />
+    <Compile Include="Importers\ImporterConfig.cs" />
     <Compile Include="Loggers\DiagnosticsLogger.cs" />
+    <Compile Include="Loggers\LoggerConfig.cs" />
     <Compile Include="Loggers\NullLogger.cs" />
     <Compile Include="Engine\ParameterDecorator.cs" />
     <Compile Include="Parameters\ConsoleArgumentParameterSource.cs" />
@@ -113,6 +121,7 @@
     <Compile Include="Parser\Infrastructure\NamedArgument.cs" />
     <Compile Include="Parser\Infrastructure\Nodes\BooleanNode.cs" />
     <Compile Include="Parser\Infrastructure\Output.cs" />
+    <Compile Include="Parser\ParserConfig.cs" />
     <Compile Include="Parser\ParserLocation.cs" />
     <Compile Include="Parser\Tree\Assignment.cs" />
     <Compile Include="Parser\Tree\Attribute.cs" />
@@ -140,19 +149,15 @@
     <Compile Include="Plugins\PluginParameter.cs" />
     <Compile Include="Plugins\RtlPlugin.cs" />
     <Compile Include="Plugins\VisitorPlugin.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Cache\ICache.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Cache\InMemoryCache.cs" />
     <Compile Include="Engine\CacheDecorator.cs" />
     <Compile Include="Exceptions\ParserException.cs" />
-    <Compile Include="configuration\WebConfigConfigurationLoader.cs" />
     <Compile Include="configuration\DotlessConfiguration.cs" />
     <Compile Include="configuration\DotlessConfigurationSectionHandler.cs" />
     <Compile Include="configuration\XmlConfigurationInterpreter.cs" />
-    <Compile Include="ContainerFactory.cs" />
-    <Compile Include="EngineFactory.cs" />
     <Compile Include="Exceptions\ParsingException.cs" />
     <Compile Include="Input\IPathResolver.cs" />
     <Compile Include="Input\RelativePathResolver.cs" />
@@ -226,6 +231,7 @@
     <Compile Include="Input\IFileReader.cs" />
     <Compile Include="Loggers\ILogger.cs" />
     <Compile Include="Loggers\ConsoleLogger.cs" />
+    <Compile Include="ServiceRegistrator.cs" />
     <Compile Include="Stylizers\ConsoleStylizer.cs" />
     <Compile Include="Stylizers\HtmlStylizer.cs" />
     <Compile Include="Stylizers\IStylizer.cs" />
@@ -260,6 +266,9 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
   </ItemGroup>
   <PropertyGroup>
     <CsharpTargetsInMsBuildToolsPath>$(MSBuildToolsPath)\Microsoft.CSharp.targets</CsharpTargetsInMsBuildToolsPath>

@@ -8,7 +8,6 @@ namespace dotless.Compiler
         public CompilerConfiguration(DotlessConfiguration config) : base(config)
         {
             CacheEnabled = false;
-            Web = false;
             Watch = false;
         }
 
